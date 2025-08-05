@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+{% block title %}Confirmar Pedido{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="text-center mb-4 text-success">Confirmar Pedido</h2>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="mb-4">
+    <h5>Datos del cliente:</h5>
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Nombre:</strong> {{ cliente_actual.nombre }}</li>
+      <li class="list-group-item"><strong>Correo:</strong> {{ cliente_actual.correo }}</li>
+      <li class="list-group-item"><strong>Teléfono:</strong> {{ cliente_actual.telefono }}</li>
+      <li class="list-group-item"><strong>Dirección:</strong> {{ cliente_actual.direccion }}</li>
+    </ul>
+  </div>
+
+  <form method="POST" action="{{ url_for('tienda.confirmar_pedido') }}" class="p-4 shadow rounded bg-white">
+    <h5 class="mb-3">Resumen del carrito</h5>
+    {% if carrito %}
+    <ul class="list-group mb-4">
+      {% for item in carrito.values() %}
+      <li class="list-group-item d-flex justify-content-between">
+        <span>{{ item.nombre }} ({{ item.cantidad }} × ${{ '%.2f' % item.precio }})</span>
+        <span><strong>${{ '%.2f' % (item.precio * item.cantidad) }}</strong></span>
+      </li>
+      {% endfor %}
+      <li class="list-group-item d-flex justify-content-between">
+        <strong>Total</strong>
+        <strong>${{ '%.2f' % total }}</strong>
+      </li>
+    </ul>
+    {% else %}
+    <div class="alert alert-warning">No hay productos en el carrito.</div>
+    {% endif %}
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-success btn-lg px-5">Finalizar Pedido</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

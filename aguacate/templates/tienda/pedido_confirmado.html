@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block title %}Pedido Confirmado{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+  <img src="https://img.icons8.com/emoji/96/check-mark-emoji.png" alt="Confirmado" class="mb-4">
+  <h2 class="text-success">¡Tu pedido ha sido confirmado!</h2>
+
+  {% if pedido %}
+    <p class="lead mt-3">Gracias por tu compra, <strong>{{ pedido.cliente.nombre }}</strong>.</p>
+    <p><strong>Número de pedido:</strong> {{ pedido.id }}</p>
+    <p><strong>Fecha:</strong> {{ pedido.fecha.strftime('%d/%m/%Y %H:%M') }}</p>
+
+    <div class="my-4">
+      <h5>Resumen:</h5>
+      <ul class="list-group">
+        {% for linea in pedido.lineas %}
+          <li class="list-group-item d-flex justify-content-between">
+            {{ linea.producto.nombre }} ({{ linea.cantidad }} × ${{ '%.2f' % linea.precio_unitario }})
+            <span><strong>${{ '%.2f' % (linea.precio_unitario * linea.cantidad) }}</strong></span>
+          </li>
+        {% endfor %}
+        <li class="list-group-item d-flex justify-content-between">
+          <strong>Total</strong>
+          <strong>${{ '%.2f' % pedido.total }}</strong>
+        </li>
+      </ul>
+    </div>
+  {% else %}
+    <div class="alert alert-warning">No se encontró el pedido.</div>
+  {% endif %}
+
+  <a href="{{ url_for('tienda.index') }}" class="btn btn-success mt-4">Volver a la tienda</a>
+</div>
+{% endblock %}

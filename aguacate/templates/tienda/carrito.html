@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+{% block title %}Carrito de Compras{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="text-success text-center mb-4">Carrito de Compras</h2>
+
+  {% if carrito %}
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-success text-center">
+        <tr>
+          <th>Producto</th>
+          <th>Precio Unitario</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for id, item in carrito.items() %}
+        <tr>
+          <td>{{ item.nombre }}</td>
+          <td class="text-end">${{ '%.2f' % item.precio }}</td>
+          <td class="text-center">{{ item.cantidad }}</td>
+          <td class="text-end">${{ '%.2f' % (item.precio * item.cantidad) }}</td>
+          <td class="text-center">
+            <a href="{{ url_for('tienda.eliminar_producto', producto_id=id) }}"
+               class="btn btn-sm btn-outline-danger">Eliminar</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class="table-light">
+        <tr>
+          <th colspan="3" class="text-end">Total:</th>
+          <th class="text-end">${{ '%.2f' % total }}</th>
+          <th></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-between mt-4">
+    <a href="{{ url_for('tienda.index') }}" class="btn btn-outline-secondary">
+      ← Seguir comprando
+    </a>
+    <a href="{{ url_for('tienda.confirmar_pedido') }}" class="btn btn-success">
+      Confirmar Pedido
+    </a>
+  </div>
+
+  {% else %}
+  <div class="alert alert-warning text-center mt-5">
+    <strong>Tu carrito está vacío.</strong>
+    <div class="mt-2">
+      <a href="{{ url_for('tienda.index') }}" class="btn btn-sm btn-outline-success">
+        Ver productos
+      </a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

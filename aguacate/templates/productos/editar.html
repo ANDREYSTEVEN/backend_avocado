@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+{% block title %}Editar Producto - Avocado Delivery{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="mb-4 text-success">Editar Producto</h2>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" class="p-4 bg-white rounded shadow-sm">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input type="text" name="nombre" id="nombre" value="{{ producto.nombre }}" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripción</label>
+      <textarea name="descripcion" id="descripcion" class="form-control" rows="3">{{ producto.descripcion }}</textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="precio" class="form-label">Precio</label>
+      <input type="number" step="0.01" name="precio" id="precio" value="{{ producto.precio }}" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="stock" class="form-label">Stock</label>
+      <input type="number" name="stock" id="stock" value="{{ producto.stock }}" class="form-control" required>
+    </div>
+
+    <!--div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" name="activo" id="activo" {% if producto.activo %}checked{% endif %}>
+      <label for="activo" class="form-check-label">Producto activo</label>
+    </div>
+
+
+    <div class="mb-3">
+      <label for="activo" class="form-label">Estado</label>
+      <select name="activo" id="activo" class="form-select">
+        <option value="1" {% if producto.activo %}selected{% endif %}>Activo</option>
+        <option value="0" {% if not producto.activo %}selected{% endif %}>Inactivo</option>
+      </select>
+    </div>-->
+
+    <div class="d-flex justify-content-between">
+      <button type="submit" class="btn btn-success">Guardar Cambios</button>
+      <a href="{{ url_for('products.listar_productos') }}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

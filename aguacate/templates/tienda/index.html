@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block title %}Tienda - Avocado{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <h2 class="text-center text-success mb-4">Tienda en Línea</h2>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% if productos %}
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    {% for producto in productos %}
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="{{ producto.imagen_url or 'https://img.icons8.com/color/96/avocado.png' }}"
+             class="card-img-top" alt="{{ producto.nombre }}">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ producto.nombre }}</h5>
+          <p class="card-text fw-bold text-success">${{ '%.2f' % producto.precio }}</p>
+          <a href="{{ url_for('tienda.agregar_carrito', producto_id=producto.id) }}"
+             class="btn btn-outline-success mt-auto">Agregar al carrito</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-info text-center mt-5">
+    No hay productos disponibles en este momento.
+  </div>
+  {% endif %}
+
+  <div class="text-center mt-5">
+    <a href="{{ url_for('tienda.ver_carrito') }}" class="btn btn-primary btn-lg">Ver Carrito</a>
+  </div>
+</div>
+{% endblock %}

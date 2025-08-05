@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}Editar Cliente{% endblock %}
+
+{% block content %}
+<h2>Editar Cliente</h2>
+<form method="POST">
+  <label>Nombre:</label>
+  <input type="text" name="nombre" value="{{ cliente.nombre }}" required>
+
+  <label>Correo:</label>
+  <input type="email" name="correo" value="{{ cliente.correo }}" required>
+
+  <label>Dirección:</label>
+  <input type="text" name="direccion" value="{{ cliente.direccion }}" required>
+
+  <label>Teléfono:</label>
+  <input type="text" name="telefono" value="{{ cliente.telefono }}">
+
+  <button type="submit">Guardar Cambios</button>
+</form>
+{% endblock %}

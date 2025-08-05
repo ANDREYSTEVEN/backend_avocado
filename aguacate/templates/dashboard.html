@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}Panel de Control - Avocado Delivery{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1>¡Bienvenido, {{ user.nombre }}!</h1>
+    <p>Este es tu panel de control.</p>
+
+    <ul class="dashboard-menu">
+        <li><a href="{{ url_for('orders.listar_pedidos') }}">Gestionar pedidos</a></li>
+        <li><a href="{{ url_for('products.listar_productos') }}">Ver productos</a></li>
+        <li><a href="{{ url_for('clients.listar_clientes') }}">Clientes</a></li>
+        <li><a href="{{ url_for('auth.logout') }}">Cerrar sesión</a></li>
+    </ul>
+</div>
+{% endblock %}

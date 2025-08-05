@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block title %}Nuevo Repartidor{% endblock %}
+
+{% block content %}
+<h2>Nuevo Repartidor</h2>
+<form method="POST">
+  <label for="nombre">Nombre:</label>
+  <input type="text" name="nombre" required>
+  <label for="telefono">Teléfono:</label>
+  <input type="text" name="telefono" required>
+  <button type="submit">Guardar</button>
+</form>
+{% endblock %}

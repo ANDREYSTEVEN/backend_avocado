@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}Nuevo Cliente{% endblock %}
+
+{% block content %}
+<h2>Registrar Cliente</h2>
+<form method="POST">
+  <label>Nombre:</label>
+  <input type="text" name="nombre" required>
+
+  <label>Correo:</label>
+  <input type="email" name="correo" required>
+
+  <label>Dirección:</label>
+  <input type="text" name="direccion" required>
+
+  <label>Teléfono:</label>
+  <input type="text" name="telefono">
+
+  <button type="submit">Crear</button>
+</form>
+{% endblock %}

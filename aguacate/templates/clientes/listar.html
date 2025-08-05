@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block title %}Clientes - Avocado Delivery{% endblock %}
+
+{% block content %}
+<h2>Clientes</h2>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<a href="{{ url_for('clients.crear_cliente') }}" class="btn">+ Nuevo Cliente</a>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Correo</th>
+      <th>Dirección</th>
+      <th>Teléfono</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cliente in clientes %}
+    <tr>
+      <td>{{ cliente.id }}</td>
+      <td>{{ cliente.nombre }}</td>
+      <td>{{ cliente.correo }}</td>
+      <td>{{ cliente.direccion }}</td>
+      <td>{{ cliente.telefono }}</td>
+      <td>
+        <a href="{{ url_for('clients.editar_cliente', cliente_id=cliente.id) }}">Editar</a>
+        <form action="{{ url_for('clients.eliminar_cliente', cliente_id=cliente.id) }}" method="POST" style="display:inline;">
+          <button type="submit" onclick="return confirm('¿Eliminar este cliente?')">Eliminar</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

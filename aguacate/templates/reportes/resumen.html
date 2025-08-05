@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+{% block title %}Reportes - Avocado{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<div class="reportes-container">
+  <h2>📈 Panel de Reportes</h2>
+
+  <form method="get" class="form-fechas">
+    <label for="inicio">Desde:</label>
+    <input type="date" id="inicio" name="inicio" value="{{ fecha_inicio }}">
+    <label for="fin">Hasta:</label>
+    <input type="date" id="fin" name="fin" value="{{ fecha_fin }}">
+    <button type="submit" class="btn btn-filtrar">Filtrar</button>
+  </form>
+
+  <div class="reportes-tarjetas">
+    <div class="reporte-card">
+      <h3>Ingresos Totales</h3>
+      <p>${{ '%.2f'|format(ventas_totales) }}</p>
+    </div>
+    <div class="reporte-card">
+      <h3>Pedidos por Estado</h3>
+      <ul>
+        {% for estado, cantidad in pedidos_por_estado %}
+          <li><strong>{{ estado }}:</strong> {{ cantidad }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="reportes-grid">
+    <div class="reporte-seccion">
+      <h4>🥑 Productos más vendidos</h4>
+      <table class="reporte-tabla">
+        <thead>
+          <tr><th>Producto</th><th>Cantidad</th></tr>
+        </thead>
+        <tbody>
+          {% for nombre, cantidad in productos_mas_vendidos %}
+            <tr><td>{{ nombre }}</td><td>{{ cantidad }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="reporte-seccion">
+      <h4>👥 Clientes más activos</h4>
+      <table class="reporte-tabla">
+        <thead>
+          <tr><th>Cliente</th><th>Pedidos</th></tr>
+        </thead>
+        <tbody>
+          {% for nombre, cantidad in clientes_mas_activos %}
+            <tr><td>{{ nombre }}</td><td>{{ cantidad }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
